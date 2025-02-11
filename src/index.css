@@ -11,3 +11,33 @@ body {
 }
 
 /* Add your own custom styles here */
+
+.booksContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin: 15px;
+}
+
+.bookCard {
+  padding: 1rem;
+  border: 1px solid gray;
+  border-radius: 0.25rem;
+  background-color: rgb(236, 193, 136);
+  text-align: center;
+}
+
+.bookCard h4 {
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+
+.bookCard img {
+  border: 1px solid black;
+  display: block;
+  width: 100%;
+  max-height: 200px;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  object-position: center;
+}

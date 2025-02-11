@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import bookLogo from "./assets/books.png";
 import { Route, Routes } from "react-router-dom";
 import AllBooks from "./components/Books";
+import Navigations from "./components/Navigations";
+import SingleBook from "./components/SingleBook";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -12,6 +14,11 @@ function App() {
         <img id="logo-image" src={bookLogo} />
         Library App
       </h1>
+
+      <div id="navbar-container">
+        {/* Navbar goes here */}
+        <Navigations></Navigations>
+      </div>
 
       <p>
         Complete the React components needed to allow users to browse a library
@@ -30,6 +37,7 @@ function App() {
       </p>
       <Routes>
         <Route path="/" element={<AllBooks />}></Route>
+        <Route path="/book/:id" element={<SingleBook />} />
       </Routes>
     </div>
   );

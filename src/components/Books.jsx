@@ -26,10 +26,10 @@ function AllBooks() {
     <div>
       <h2>Library Catalogue</h2>
       {/* Render the list of books */}
-      <ul>
+      <div className="booksContainer">
         {displayedBooks.length > 0 ? (
           displayedBooks.map((book) => (
-            <li key={book.id}>
+            <div key={book.id} className="bookCard">
               <h4>{book.title}</h4>
               {book.coverimage && (
                 <img
@@ -37,12 +37,19 @@ function AllBooks() {
                   alt={`image of ${book.title}'s cover.`}
                 />
               )}
-            </li>
+              <button
+                // when the button is clicked, navigate to the SingleBook path/page with the book.id dynamically passed into the Url
+                className="single-book-details-button"
+                onClick={() => navigate(`/book/${book.id}`)}
+              >
+                View Book Details
+              </button>
+            </div>
           ))
         ) : (
           <p>Loading books...</p>
         )}
-      </ul>
+      </div>
     </div>
   );
 }
