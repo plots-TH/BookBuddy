@@ -3,7 +3,7 @@
 const fetchAllBooks = async () => {
   try {
     const response = await fetch(
-      "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books",
+      `${import.meta.env.VITE_API_BASE_URL}/api/books`,
       {
         method: "GET",
         headers: {
@@ -13,9 +13,6 @@ const fetchAllBooks = async () => {
     );
 
     // Check if the response is ok
-    if (!response.ok) {
-      throw new Error("Failed to fetch books");
-    }
 
     const data = await response.json();
     return data; // Should return the array of books
@@ -25,7 +22,27 @@ const fetchAllBooks = async () => {
   }
 };
 
-// export {};
+const fetchUser = async (token) => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/api/users/me`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const userData = await response.json();
+    console.log("user data:", userData);
+    return userData;
+  } catch (err) {
+    console.error("Error fetching user data:", err);
+  }
+};
+
+export { fetchUser };
 export default fetchAllBooks;
 
 //const fetchAllPlayers = async () => {

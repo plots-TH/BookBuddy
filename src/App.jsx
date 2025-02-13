@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import bookLogo from "./assets/books.png";
 import { Route, Routes } from "react-router-dom";
 import AllBooks from "./components/Books";
 import Navigations from "./components/Navigations";
 import SingleBook from "./components/SingleBook";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Account from "./components/Account";
 
 function App() {
   const [token, setToken] = useState(null);
+  useEffect(() => {
+    const localToken = localStorage.getItem("token");
+    if (localToken) {
+      setToken(localToken);
+    }
+  }, []);
 
   return (
     <div>
@@ -14,11 +23,6 @@ function App() {
         <img id="logo-image" src={bookLogo} />
         Library App
       </h1>
-
-      <div id="navbar-container">
-        {/* Navbar goes here */}
-        <Navigations></Navigations>
-      </div>
 
       <p>
         Complete the React components needed to allow users to browse a library
@@ -35,9 +39,24 @@ function App() {
         Don't forget to set up React Router to navigate between the different
         views of your single page application!
       </p>
+
+      <div id="navbar-container">
+        {/* Navbar goes here */}
+        <Navigations token={token} setToken={setToken}></Navigations>
+      </div>
+
       <Routes>
         <Route path="/" element={<AllBooks />}></Route>
-        <Route path="/book/:id" element={<SingleBook />} />
+        <Route path="/book/:id" element={<SingleBook token={token} />} />
+        <Route
+          path="/register"
+          element={<Register setToken={setToken} token={token} />}
+        ></Route>
+        <Route
+          path="/login"
+          element={<Login setToken={setToken} token={token} />}
+        ></Route>
+        <Route path="/account" element={<Account token={token} />}></Route>
       </Routes>
     </div>
   );

@@ -7,6 +7,8 @@ function AllBooks() {
   // create a const that calls useNavigate() so we can use it later on buttons/links to switch between routes aka "pages"
   const navigate = useNavigate();
   const [displayedBooks, setDisplayedbooks] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     console.log("Fetching books...");
@@ -16,9 +18,20 @@ function AllBooks() {
       console.log(result.books);
 
       setDisplayedbooks(result.books);
+      setFilteredBooks(result.books || []);
     };
     getBooks();
   }, []);
+
+  const handleSearch = (e) => {
+    const searchCriteria = e.target.value.toLowerCase();
+    setSearchInput(searchCriteria);
+
+    const searchResults = displayedBooks.filter((book) =>
+      book.title.toLowerCase().includes(searchCriteria)
+    );
+    setFilteredBooks(searchResults);
+  };
 
   console.log("displayedBooks:", displayedBooks);
 
@@ -26,19 +39,24 @@ function AllBooks() {
     <div>
       <h2>Library Catalogue</h2>
       {/* Render the list of books */}
+
+      <input
+        type="text"
+        placeholder="Search for a book..."
+        value={searchInput}
+        onChange={handleSearch}
+        className="search-bar"
+      />
+
       <div className="booksContainer">
-        {displayedBooks.length > 0 ? (
-          displayedBooks.map((book) => (
+        {filteredBooks.length > 0 ? (
+          filteredBooks.map((book) => (
             <div key={book.id} className="bookCard">
               <h4>{book.title}</h4>
               {book.coverimage && (
-                <img
-                  src={book.coverimage}
-                  alt={`image of ${book.title}'s cover.`}
-                />
+                <img src={book.coverimage} alt={`Cover of ${book.title}`} />
               )}
               <button
-                // when the button is clicked, navigate to the SingleBook path/page with the book.id dynamically passed into the Url
                 className="single-book-details-button"
                 onClick={() => navigate(`/book/${book.id}`)}
               >
@@ -47,7 +65,7 @@ function AllBooks() {
             </div>
           ))
         ) : (
-          <p>Loading books...</p>
+          <p>No books found.</p>
         )}
       </div>
     </div>

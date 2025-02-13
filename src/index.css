@@ -25,6 +25,7 @@ body {
   border-radius: 0.25rem;
   background-color: rgb(236, 193, 136);
   text-align: center;
+  max-width: 10rem;
 }
 
 .bookCard h4 {
@@ -40,4 +41,27 @@ body {
   aspect-ratio: 16/9;
   object-fit: cover;
   object-position: center;
+}
+
+/* register component styling */
+
+.register-container {
+  width: 50%;
+  margin: 0 auto;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.register-container label,
+.register-container input {
+  display: block;
+}
+
+.register-container input,
+.register-container button {
+  margin-top: 15px;
+  width: 100%;
 }
